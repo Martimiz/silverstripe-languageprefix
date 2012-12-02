@@ -2,9 +2,8 @@
 
 ## Introduction ##
 
-The LanguagePrefix extension allows you to create links with a language prefix
-for multilingual websites, using one domain only, that can be parsed by the 
-PrefixModelAsController. Example:
+The Language Prefix module allows you to create links with a language prefix
+for multilingual websites using [SilverStripe Translatable](https://github.com/silverstripe/silverstripe-translatable). Example:
  
  * www.mydomain.com/en/
  * www.mydomain.com/nl/
