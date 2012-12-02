@@ -9,13 +9,14 @@ PrefixModelAsController. Example:
  
 
 ## Installation ##
-Make sure the [Translatable module](https://github.com/silverstripe/silverstripe-translatable) is installed and enabled on your website. Then add the following to your _config.php (enabled by default):
+Rename the module to 'languageprefix' and copy to the root of your site. Make sure the 
+[Translatable module](https://github.com/silverstripe/silverstripe-translatable) is installed and enabled on your website. Then add the following to your _config.php (enabled by default) and do a /dev/build?flush=1:
 
 	:::php
 	Object::add_extension('Page', 'LanguagePrefix'); 
 	Object::add_extension('Page_Controller', 'LanguagePrefix_Controller'); 
 	
-Next you need to add this single bit of code to your Page class. This will will make sure that all pagelinks on your website will have the language prefix added to them:
+`Important:` next you need to add the following bit of code to your `Page` class. This will will make sure that all pagelinks on your website will have the language prefix added to them:
 
 	:::php
 	/**
