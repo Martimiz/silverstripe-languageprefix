@@ -19,4 +19,4 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
 
 ## Maintainers ##
 
- * Martine Bloem <martine at balbus dot nl>
+ * Martine Bloem (Martimiz) <martine at balbus dot nl>
