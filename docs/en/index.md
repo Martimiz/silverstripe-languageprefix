@@ -4,8 +4,8 @@ The LanguagePrefix extension allows you to create links with a language prefix
 for multilingual websites, using one domain only, that can be parsed by the 
 PrefixModelAsController. Example:
 
- * www.mydomain.com/en/
- * www.mydomain.com/nl/
+	www.mydomain.com/en/
+	www.mydomain.com/nl/
  
 
 ## Installation ##
@@ -31,8 +31,8 @@ Rename the module to 'languageprefix' and copy to the root of your site. Make su
 ## Using custom prefixes ##
 By default the module uses the locale as prefix:
 
-* www.mydomain.ext/en_US/about-us
-* www.mydomain.ext/nl_NL/over-ons
+	www.mydomain.ext/en_US/about-us
+	www.mydomain.ext/nl_NL/over-ons
 
 To use custom language prefixes, add the following to your _config.php:
 
