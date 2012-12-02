@@ -10,7 +10,7 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
 
 ## Usage
 
-[Setup and Usage Documentation](docs/en/index.md)
+Setup and usage documentation: docs/en/index.md
 
 ## Requirements ##
 
