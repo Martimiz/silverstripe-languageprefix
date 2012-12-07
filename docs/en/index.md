@@ -43,6 +43,28 @@ To use custom language prefixes, add the following to your _config.php:
 	    'nl_NL' => 'nl'
 	);
 
+## Redirect root
+If you wish, you can redirect the root to the default locale prefix in a number of ways, for example using .htaccess or lighttpd configuration redirect rules, but the easiest is probably to use a Director rule in _config.php. Example (depending on your prefix): 
+
+	:::php
+	Director::addRules(100, array(
+	    '' => '->/en/',
+    ));
+ 
+ The same rule could also be applied in _config/routes.yml. Replace:
+ 
+ 	:::php
+ 	Director:
+	    rules:
+	        '': 'PrefixModelAsController'
+ 
+ by (and don't forget to flush):
+ 
+ 	:::
+ 	Director:
+	    rules:
+	        '': '->/en/' 	
+ 
 ## Enabling BaseHref ##
 Although `BaseHref` is deprecated in SilverStripe 3.x, it is still used in some templates to add a link to the homepage (Simple!). To enabl it's use, add the following bit of code to your Page_Controller:
 
