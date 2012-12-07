@@ -54,7 +54,7 @@ class PrefixModelAsController extends ModelAsController {
 					    ->sort('Sort')
 					    ->First();
 
-				if ($siteTree) {
+				if ($sitetree) {
 					$URLSegment = $sitetree->URLSegment;
 				}
 				else {
