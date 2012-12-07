@@ -1,5 +1,7 @@
 # LanguagePrefix module for SilverStripe CMS #
 
+This is still a beta version
+
 ## Introduction ##
 
 The Language Prefix module allows you to create links with a language prefix
