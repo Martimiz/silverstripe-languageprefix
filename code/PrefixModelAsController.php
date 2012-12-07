@@ -9,13 +9,6 @@ class PrefixModelAsController extends ModelAsController {
 	 * @var string
 	 */
 	protected $locale = 'en_US';	
-
-	/** 
-	 * Set to true if a home page is requested from the root (as in mydomain/en/)
-	 * equivalent to the RootURLController.
-	 * @var boolean
-	 */
-	protected static $is_at_root = false;	
 	
 	/**
 	 * @var string
@@ -47,7 +40,7 @@ class PrefixModelAsController extends ModelAsController {
 		
 		// Empty URLSegment? Try and get the homepage for the current locale
 		if(empty($URLSegment)) {
-			self::$is_at_root = true;
+			PrefixRootURLController::set_is_at_root();
 
 			// get the homepage from the defaul homepage Translation Group
 			$URLSegment = Translatable::get_homepage_link_by_locale($this->locale);

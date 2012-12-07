@@ -148,7 +148,7 @@ class LanguagePrefix extends DataExtension {
 		//       and the homepage URLSegment cannot be stripped that way    
 		if (
 			empty($action) && !$this->owner->ParentID &&
-			$base == Translatable::get_homepage_link_by_locale($this->owner->Locale)) {
+			$base == self::get_homepage_link_by_locale($this->owner->Locale)) {
 			
 			$base = null;
 		}
@@ -170,20 +170,33 @@ class LanguagePrefix extends DataExtension {
 	public function alternateAbsoluteLink($action = null) {
 		return Director::absoluteURL($this->PrefixLink($action));
 	}	
- }
+
+	/**
+	 * Get the RelativeLink value for a home page in another locale. This is found by searching for the default home
+	 * page in the default language, then returning the link to the translated version (if one exists).
+	 *
+	 * @return string
+	 */
+	public static function get_homepage_link_by_locale($locale) {
+
+		$deflink = RootURLController::get_default_homepage_link();
+		if ($locale == Translatable::default_locale()) {
+			return $deflink;
+		}
+		$original = SiteTree::get_by_link($deflink);
+		
+		if(!empty($original)) {
+			$homepage = $original->getTranslation($locale);
+			if (empty($homepage)) {
+				$homepage = SiteTree::get()->filter(array('Locale' => $locale))->First();
+			}
+			if (!empty($homepage)) return $homepage->URLSegment;
+		}
+		return '';	
+	}	
+}
 
 class LanguagePrefix_Controller extends Extension {
-	
-	/**
-	 * Setting $_POST['languageprefix'] prevents ContentController::init()
-	 * from redirecting the default homepage to the root:
-	 * /en/ -> /
-	 */
-	public function onBeforeInit() {
-		if ($this->owner->Locale == Translatable::default_locale()) {
-			$_POST['languageprefix'] = '1';
-		}
-	}
 
 	/**
 	 * Return a link to the homepage for the current locale
