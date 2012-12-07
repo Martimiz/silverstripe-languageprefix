@@ -46,7 +46,7 @@ class LanguagePrefix extends DataExtension {
 	 * 
 	 * @var array
 	 */
-	public static $language_prefixes = array();
+	public static $locale_prefix_map = array();
 
 	/**
 	 * return the language prefix for the current locale. If no locale is given,
@@ -58,8 +58,8 @@ class LanguagePrefix extends DataExtension {
 	public static function get_prefix($locale = null) {
 		if (!$locale) $locale = Translatable::default_locale();
 
-		if (isset(self::$language_prefixes[$locale])) {
-			$prefix = self::$language_prefixes[$locale];
+		if (isset(self::$locale_prefix_map[$locale])) {
+			$prefix = self::$locale_prefix_map[$locale];
 		} else {
 			$prefix = $locale;
 		}
@@ -81,8 +81,8 @@ class LanguagePrefix extends DataExtension {
 		}
 		
 		// language prefixes defined? 
-		if (!empty(self::$language_prefixes)) {
-			$arrayLocale = array_flip(self::$language_prefixes); 
+		if (!empty(self::$locale_prefix_map)) {
+			$arrayLocale = array_flip(self::$locale_prefix_map); 
 			$locale = (isset($arrayLocale[$prefix])) ?
 				$arrayLocale[$prefix] : '';
 		

@@ -38,7 +38,7 @@ To use custom language prefixes, add the following to your _config.php:
 
 	:::php
 	// Format: locale => prefix
-	LanguagePrefix::$language_prefixes = array(
+	LanguagePrefix::$locale_prefix_map = array(
 	    'en_US' => 'en',
 	    'nl_NL' => 'nl'
 	);
