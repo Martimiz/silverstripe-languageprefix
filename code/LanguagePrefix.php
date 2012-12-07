@@ -193,6 +193,36 @@ class LanguagePrefix extends DataExtension {
 			if (!empty($homepage)) return $homepage->URLSegment;
 		}
 		return '';	
+	}
+	
+	/**
+	 * Update the URLsegment in the CMS so it shows the correct language
+	 * prefix in the URL.
+	 * 
+	 * @param FieldList $fields
+	 */
+	public function updateCMSFields(FieldList $fields) {
+		$fields->removeByName('URLSegment');
+
+		$prefix = self::get_prefix($this->owner->Locale);
+
+		$baseLink = Controller::join_links (
+			Director::absoluteBaseURL(),
+			$prefix . '/',
+			(SiteTree::nested_urls() && $this->owner->ParentID ? $this->owner->Parent()->RelativeLink(true) : null)
+		);
+		
+		$url = (strlen($baseLink) > 36) ? "..." .substr($baseLink, -32) : $baseLink;
+		$urlsegment = new SiteTreeURLSegmentField("URLSegment", $this->owner->fieldLabel('URLSegment'));
+		$urlsegment->setURLPrefix($url);
+		$helpText = (SiteTree::nested_urls() && count($this->owner->Children())) ? $this->owner->fieldLabel('LinkChangeNote') : '';
+		if(!URLSegmentFilter::$default_allow_multibyte) {
+			$helpText .= $helpText ? '<br />' : '';
+			$helpText .= _t('SiteTreeURLSegmentField.HelpChars', ' Special characters are automatically converted or removed.');
+		}
+		$urlsegment->setHelpText($helpText);
+
+		$fields->addFieldToTab('Root.Main', $urlsegment, 'MenuTitle');
 	}	
 }
 
