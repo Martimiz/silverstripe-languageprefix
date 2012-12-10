@@ -157,18 +157,6 @@ class LanguagePrefix extends DataExtension {
 		if($action === true) $action = null;
 
 		return Controller::join_links($base, '/', $action);
-	}
-	
-	/**
-	 * Get the absolute URL for this page, including protocol and host.
-	 * alternateAbsoluteLink() is called from and will overrule 
-	 * SiteTree::AbsoluteLink() default behaviour
-	 *
-	 * @param string $action See {@link Link()}
-	 * @return string
-	 */
-	public function alternateAbsoluteLink($action = null) {
-		return Director::absoluteURL($this->PrefixLink($action));
 	}	
 
 	/**
