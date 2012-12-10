@@ -1,0 +1,30 @@
+These tests mirror the unittests from the translatable module, 
+with two exceptions:
+
+- Locale Get Param Redirects To Translation
+  -----------------------------------------
+  replaced URLSegment in:
+  response = $this->get(Controller::join_links($origPage->URLSegment, '?locale=de_DE'));
+  by Link():
+  response = $this->get(Controller::join_links($origPage->Link(), '?locale=de_DE'));
+
+  get() expects a valid link, and URLSegment misses the prefix so it doesn't qualify here.
+  I think this replacement is valid: because an url isn't a URLSegment per se.
+
+
+- test Alternate Get By Link
+  --------------------------
+  Trying to get property of non-object
+  Replaced instances of:
+  SiteTree::get_by_link($page->Link())
+  by:
+  SiteTree::get_by_link($page->RelativeLink())
+
+  I'm not sure this is valid. Although get_by_link is seldom used like this
+  in core, I still think this might be an issue... 
+
+  The only problem I see is in using SiteTree::Page() and SiteTree::ChildrenOf()
+  if these functions are used with a full link as parameter... 
+  
+  
+
