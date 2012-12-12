@@ -15,19 +15,24 @@ Rename the module to 'languageprefix' and copy to the root of your site. Make su
 	:::php
 	Object::add_extension('Page', 'LanguagePrefix'); 
 	Object::add_extension('Page_Controller', 'LanguagePrefix_Controller'); 
-	
-`Important:` next you need to add the following bit of code to your `Page` class. This will will make sure that all pagelinks on your website will have the language prefix added to them:
+
+## Create page-links in your template
+To create the proper links in your template use ** $PrefixLink ** instead of ** $Link **:
 
 	:::php
-	/**
-	 * Adds the prefix to all pagelinks  
-	 * @param $action
-	 * @return string 
-	 */
-	public function Link($action = null) {
-		return $this->PrefixLink($action);
-	} 	
+		<ul>
+		<% loop $Menu(1) %>
+			<li class="$LinkingMode"><a href="$PrefixLink" title="$Title.XML">$MenuTitle.XML</a></li>
+		<% end_loop %>
+		</ul>
 
+However, if you want to support existing templates and continue to use $Link, you may add the following to your Page class:
+
+	:::php
+		public function Link($action = null) {
+			return $this->PrefixLink($action);
+		}
+`Note:` There is a known issue with the use of a pagelink as a parameter to the ChildrenOf() or the Page() function. These functions don't allow the language prefix. Use URLSegment instead. When in doubt, stick to the $PrefixLink.  
 ## Using custom prefixes ##
 By default the module uses the locale as prefix:
 
