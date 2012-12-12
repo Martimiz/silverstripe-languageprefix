@@ -33,6 +33,7 @@ However, if you want to support existing templates and continue to use $Link, yo
 			return $this->PrefixLink($action);
 		}
 `Note:` There is a known issue with the use of a pagelink as a parameter to the ChildrenOf() or the Page() function. These functions don't allow the language prefix. Use URLSegment instead. When in doubt, stick to the $PrefixLink.  
+
 ## Using custom prefixes ##
 By default the module uses the locale as prefix:
 
@@ -71,20 +72,17 @@ If you wish, you can redirect the root to the default locale prefix in a number 
 	        '': '->/en/' 	
  
 ## Enabling BaseHref ##
-Although `BaseHref` is deprecated in SilverStripe 3.x, it is still used in some templates to add a link to the homepage (Simple!). To enabl it's use, add the following bit of code to your Page_Controller:
+Although `BaseHref` is deprecated in SilverStripe 3.x, it is still used in some templates to add a link to the homepage (Simple!). To enable its use, add the following to your Page_Controller:
 
 	:::php
 	/**
-	 * BaseHref is deprecated, but still used in the Simple Template.
-	 * This function cannot be overruled from LanguagePrefix_Controller!
+	 * This function supports the (deprecated) use of $BaseHref in templates
+	 *
+	 * @return string
 	 */
 	public function BaseHref() {
-		return $this->HomeLink();
-	}  
+		return $this->BaseLinkForLocale();
+	}
 
-## HomeLink ##
-To create custom links to the homepage for your current locale, you can use the following instead of $BaseHref:
+`Note:` You can use ** $BaseLinkForLocale ** in your templates to create a link to the homepage for the current locale.
 
-	$HomeLink
-
-## More information ##

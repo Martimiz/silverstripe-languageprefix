@@ -211,21 +211,26 @@ class LanguagePrefix extends DataExtension {
 		$urlsegment->setHelpText($helpText);
 
 		$fields->addFieldToTab('Root.Main', $urlsegment, 'MenuTitle');
-	}	
-}
-
-class LanguagePrefix_Controller extends Extension {
-
+	}
+	
 	/**
 	 * Return a link to the homepage for the current locale
 	 * 
 	 * @return string link to the homepage for the current locale 
 	 */
-	public function HomeLink() {
+	public function BaseLinkForLocale() {
 		return Controller::join_links(
 			Director::baseURL(),
 			LanguagePrefix::get_prefix($this->owner->Locale),
 			'/'
 		);
-	}		
+	}
+
+	/**
+	 * @deprecated Use BaseLinkForLocale() instead
+	 */
+	public function HomeLink() {
+		return $this->BaseLinkForLocale();
+	}	
 }
+
