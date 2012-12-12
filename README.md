@@ -1,6 +1,6 @@
 # LanguagePrefix module for SilverStripe CMS #
 
-This is still a beta version
+This module is now considered rc1
 
 ## Introduction ##
 
