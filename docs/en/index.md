@@ -13,8 +13,7 @@ Rename the module to 'languageprefix' and copy to the root of your site. Make su
 [Translatable module](https://github.com/silverstripe/silverstripe-translatable) is installed and enabled on your website. Then add the following to your _config.php (enabled by default) and do a /dev/build?flush=1:
 
 	:::php
-	Object::add_extension('Page', 'LanguagePrefix'); 
-	Object::add_extension('Page_Controller', 'LanguagePrefix_Controller'); 
+	Object::add_extension('SiteTree', 'LanguagePrefix'); 
 
 ## Create page-links in your template
 To create the proper links in your template use ** $PrefixLink ** instead of ** $Link **:
