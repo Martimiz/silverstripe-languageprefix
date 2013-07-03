@@ -204,7 +204,7 @@ class LanguagePrefix extends DataExtension {
 		$urlsegment = new SiteTreeURLSegmentField("URLSegment", $this->owner->fieldLabel('URLSegment'));
 		$urlsegment->setURLPrefix($url);
 		$helpText = (SiteTree::nested_urls() && count($this->owner->Children())) ? $this->owner->fieldLabel('LinkChangeNote') : '';
-		if(!URLSegmentFilter::$default_allow_multibyte) {
+		if(! URLSegmentFilter::create()->getAllowMultibyte() ) {
 			$helpText .= $helpText ? '<br />' : '';
 			$helpText .= _t('SiteTreeURLSegmentField.HelpChars', ' Special characters are automatically converted or removed.');
 		}
