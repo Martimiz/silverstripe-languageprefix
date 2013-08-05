@@ -18,8 +18,7 @@ class PrefixModelAsController extends ModelAsController {
 	public function getNestedController() {
 		
 		// Check Translatable dependency
-		if (!class_exists('Translatable') || 
-		    !Object::has_extension('SiteTree', 'Translatable')) {
+		if ( !class_exists('Translatable') || !SiteTree::has_extension('Translatable') ) {
 			throw new Exception('Dependency error: the LanguagePrefix module expects the Translatable module.');
 		} 
 		
