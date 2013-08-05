@@ -1,6 +1,7 @@
 # LanguagePrefix module for SilverStripe CMS #
 
-This module is now considered rc1
+ * Supports SilverStripe 3.1.x + 
+ * For SilverStripe 3.0.x use version 1.0
 
 ## Introduction ##
 
@@ -16,7 +17,7 @@ Setup and usage documentation: docs/en/index.md
 
 ## Requirements ##
 
- * SilverStripe Framework 3.0+ and CMS 3.0+
+ * SilverStripe Framework 3.1+ and CMS 3.1+
  * SilverStripe Translatable module
 
 ## Maintainers ##
