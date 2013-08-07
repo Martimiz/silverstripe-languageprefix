@@ -4,3 +4,9 @@ Name: languageprefix-extensions
 SiteTree:
   extensions:
     ['LanguagePrefix']
+---
+Name: languageprefix-config
+---
+prefixconfig:
+  locale_prefix_map: ''
+
