@@ -39,24 +39,26 @@ By default the module uses the locale as prefix:
 	www.mydomain.ext/en_US/about-us
 	www.mydomain.ext/nl_NL/over-ons
 
-To use custom language prefixes, add the following to your _config.php:
+To use custom language prefixes, change the prefixconfig seyttings in your _config/languageprefix.yml to look like this:
 
 	:::php
-	// Format: locale => prefix
-	LanguagePrefix::$locale_prefix_map = array(
-	    'en_US' => 'en',
-	    'nl_NL' => 'nl'
-	);
+	---
+	Name: languageprefix-config
+	---
+	prefixconfig:
+	  locale_prefix_map:
+	    'en_US': en
+	    'nl_NL': nl
 
 ## Redirect root
-If you wish, you can redirect the root to the default locale prefix in a number of ways, for example using .htaccess or lighttpd configuration redirect rules, but the easiest is probably to use a Director rule in _config.php. Example (depending on your prefix): 
+If you wish, you can redirect the root to the default locale prefix in a number of ways, for example using .htaccess or lighttpd configuration redirect rules, to create a 301 redirect. The easiest way is probably to use a Director rule in _config.php. Example (depending on your prefix): 
 
 	:::php
 	Director::addRules(100, array(
 	    '' => '->/en/',
-    ));
+	));
  
- The same rule could also be applied in _config/routes.yml. Replace:
+ The same rule could also be applied to _config/routes.yml. Replace:
  
  	:::php
  	Director:
@@ -68,7 +70,9 @@ If you wish, you can redirect the root to the default locale prefix in a number 
  	:::
  	Director:
 	    rules:
-	        '': '->/en/' 	
+	        '': '->/en/' 
+
+**Note:** as this is not really a 301 redirect, I'm not sure how searchengines would respond to this - it might be better to stick with the .htaccess solution...	
  
 ## Enabling BaseHref ##
 Although `BaseHref` is deprecated in SilverStripe 3.x, it is still used in some templates to add a link to the homepage (Simple!). To enable its use, add the following to your Page_Controller:
