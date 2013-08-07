@@ -199,18 +199,17 @@ class LanguagePrefix extends DataExtension {
 			$prefix . '/',
 			(SiteTree::nested_urls() && $this->owner->ParentID ? $this->owner->Parent()->RelativeLink(true) : null)
 		);
-		
-		$url = (strlen($baseLink) > 36) ? "..." .substr($baseLink, -32) : $baseLink;
+				
 		$urlsegment = new SiteTreeURLSegmentField("URLSegment", $this->owner->fieldLabel('URLSegment'));
-		$urlsegment->setURLPrefix($url);
-		$helpText = (SiteTree::nested_urls() && count($this->owner->Children())) ? $this->owner->fieldLabel('LinkChangeNote') : '';
-		if(!URLSegmentFilter::$default_allow_multibyte) {
+		$urlsegment->setURLPrefix($baseLink);
+		$helpText = (SiteTree::config()->nested_urls && count($this->owner->Children())) ? $this->owner->fieldLabel('LinkChangeNote') : '';
+		if(!Config::inst()->get('URLSegmentFilter', 'default_allow_multibyte')) {
 			$helpText .= $helpText ? '<br />' : '';
 			$helpText .= _t('SiteTreeURLSegmentField.HelpChars', ' Special characters are automatically converted or removed.');
 		}
 		$urlsegment->setHelpText($helpText);
-
-		$fields->addFieldToTab('Root.Main', $urlsegment, 'MenuTitle');
+		
+		$fields->addFieldToTab('Root.Main', $urlsegment, 'MenuTitle');		
 	}
 	
 	/**
