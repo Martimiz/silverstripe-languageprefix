@@ -966,13 +966,9 @@ class LanguagePrefixTest_DataObject extends DataObject implements TestOnly {
 
 class LanguagePrefixTest_Extension extends DataExtension implements TestOnly {
 	
-	function extraStatics($class = null, $extension = null) {
-		return array(
-			'db' => array(
-				'LanguagePrefixDecoratedProperty' => 'Text'
-			)
-		);
-	}
+	static $db = array(
+		'LanguagePrefixDecoratedProperty' => 'Text'
+	);
 }
 
 class LanguagePrefixTest_Page extends Page implements TestOnly {
