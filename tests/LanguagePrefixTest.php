@@ -959,14 +959,14 @@ class LanguagePrefixTest extends FunctionalTest {
 class LanguagePrefixTest_DataObject extends DataObject implements TestOnly {
 	// add_extension() used to add decorator at end of file
 	
-	static $db = array(
+	private static $db = array(
 		'LanguagePrefixProperty' => 'Text'
 	);
 }
 
 class LanguagePrefixTest_Extension extends DataExtension implements TestOnly {
 	
-	static $db = array(
+	private static $db = array(
 		'LanguagePrefixDecoratedProperty' => 'Text'
 	);
 }
@@ -975,7 +975,7 @@ class LanguagePrefixTest_Page extends Page implements TestOnly {
 	// static $extensions is inherited from SiteTree,
 	// we don't need to explicitly specify the fields
 	
-	static $db = array(
+	private static $db = array(
 		'LanguagePrefixProperty' => 'Text'
 	);
 }
