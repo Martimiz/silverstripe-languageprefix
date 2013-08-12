@@ -691,7 +691,7 @@ class LanguagePrefixTest extends FunctionalTest {
 		// test with translatable
 		Translatable::set_current_locale('de_DE');
 		$this->assertEquals(
-			RootURLController::get_homepage_link(), 
+			LanguagePrefix::get_homepage_link_by_locale('de_DE'), 
 			'heim', 
 			'Homepage with different URLSegment in non-default language is found'
 		);
