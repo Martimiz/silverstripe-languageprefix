@@ -57,8 +57,6 @@ class LanguagePrefix extends DataExtension {
 	 */
 	public static function get_prefix($locale = null) {
 		if (!$locale) $locale = Translatable::default_locale();
-		
-		if (!isset(self::$locale_prefix_map)) self::load_prefix_map();
 
 		if (isset(self::$locale_prefix_map[$locale])) {
 			$prefix = self::$locale_prefix_map[$locale];
@@ -110,6 +108,14 @@ class LanguagePrefix extends DataExtension {
 	protected static function load_prefix_map() {
 		self::$locale_prefix_map = Config::inst()->get('prefixconfig', 'locale_prefix_map'); 
 	}		
+
+	/**
+	 * Load the prefix map before anything else happens
+	 */
+	public function __construct() {
+		parent::__construct();
+		self::load_prefix_map();
+	}
 	
 	/**
 	 * add the prefix to your links.
@@ -199,8 +205,6 @@ class LanguagePrefix extends DataExtension {
 	 */
 	public function updateCMSFields(FieldList $fields) {
 		$fields->removeByName('URLSegment');
-		
-		self::load_prefix_map();
 
 		$prefix = self::get_prefix($this->owner->Locale);
 
