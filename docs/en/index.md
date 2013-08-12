@@ -10,10 +10,7 @@ PrefixModelAsController. Example:
 
 ## Installation ##
 Rename the module to 'languageprefix' and copy to the root of your site. Make sure the 
-[Translatable module](https://github.com/silverstripe/silverstripe-translatable) is installed and enabled on your website. Then add the following to your _config.php (enabled by default) and do a /dev/build?flush=1:
-
-	:::php
-	Object::add_extension('SiteTree', 'LanguagePrefix'); 
+[Translatable module](https://github.com/silverstripe/silverstripe-translatable) is installed and enabled on your website. The LanguagePrefix module now uses YAML for its configuration. Extensions are enabled by default in _config/languageprefix.yml. Perform ?flush=1 to enable. 
 
 ## Create page-links in your template
 To create the proper links in your template use ** $PrefixLink ** instead of ** $Link **:
@@ -72,7 +69,7 @@ If you wish, you can redirect the root to the default locale prefix in a number 
 	    rules:
 	        '': '->/en/' 
 
-**Note:** as this is not really a 301 redirect, I'm not sure how searchengines would respond to this - it might be better to stick with the .htaccess solution...	
+**Note:** as this is probably not really a 301 redirect, I'm not sure how searchengines would respond to this - it might be better to stick with the .htaccess solution...	
  
 ## Enabling BaseHref ##
 Although `BaseHref` is deprecated in SilverStripe 3.x, it is still used in some templates to add a link to the homepage (Simple!). To enable its use, add the following to your Page_Controller:
