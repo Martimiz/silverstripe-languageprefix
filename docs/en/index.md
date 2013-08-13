@@ -98,3 +98,7 @@ To enable this feature, set the following in _config/LanguagePrefix.yml
 	enable_duplicate_urlsegments: true
 	
 **Note:** don't forget to ?flush=1. If the admin section was already open, you might have to perform a flush there as well!
+
+## Language switcher
+
+You can use the language switchers that are described [in the Translatable README file](https://github.com/silverstripe/silverstripe-translatable/blob/master/docs/en/index.md#switching-languages), as long as you use `PrefixLink` instead of `Link`. The latter will probably also work, but only if you defined the Link function in the Page as explained [here](#create-page-links-in-your-template). 
