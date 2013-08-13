@@ -33,5 +33,83 @@ class LanguagePrefixTranslatable extends Translatable {
 		
 		return !$existingPage;
 	}    
+	
+	/**
+	 * Subclasses Translatable::CreateTranslation() 
+	 * 
+	 * Creates a new translation for the owner object of this decorator.
+	 * Checks {@link getTranslation()} to return an existing translation
+	 * instead of creating a new one.
+	 * 
+	 * Will automatically create the translation's URLSegment as a duplicate 
+	 * of the original pages' URLSegment 
+	 * 
+	 * @param string $locale Target locale to translate this object into
+	 * @param boolean $saveTranslation Flag indicating whether the new record 
+	 * should be saved to the database.
+	 * @return DataObject The translated object
+	 */
+	function createTranslation($locale, $saveTranslation = true) {
+		if($locale && !i18n::validate_locale($locale)) {
+			throw new InvalidArgumentException(sprintf('Invalid locale "%s"', $locale));
+		}
+		
+		if(!$this->owner->exists()) {
+			user_error(
+				'Translatable::createTranslation(): Please save your record before creating a translation', 
+				E_USER_ERROR
+			);
+		}
+		
+		// permission check
+		if(!$this->owner->canTranslate(null, $locale)) {
+			throw new Exception(sprintf(
+				'Creating a new translation in locale "%s" is not allowed for this user',
+				$locale
+			));
+			return;
+		}
+		
+		$existingTranslation = $this->getTranslation($locale);
+		if($existingTranslation) return $existingTranslation;
+		
+		$class = $this->owner->class;
+		$newTranslation = new $class;
+		
+		// copy all fields from owner (apart from ID)
+		$newTranslation->update($this->owner->toMap());
+		
+		// If the object has Hierarchy extension,
+		// check for existing translated parents and assign
+		// their ParentID (and overwrite any existing ParentID relations
+		// to parents in other language). If no parent translations exist,
+		// they are automatically created in onBeforeWrite()
+		if($newTranslation->hasField('ParentID')) {
+			$origParent = $this->owner->Parent();
+			$newTranslationParent = $origParent->getTranslation($locale);
+			if($newTranslationParent) $newTranslation->ParentID = $newTranslationParent->ID;
+		}
+		
+		$newTranslation->ID = 0;
+		$newTranslation->Locale = $locale;
+		
+		$originalPage = $this->getTranslation(self::default_locale());
+		if ($originalPage) {
+			$urlSegment = $originalPage->URLSegment;
+		} else {
+			$urlSegment = $newTranslation->URLSegment;
+		}
+		$newTranslation->URLSegment = $urlSegment;
+
+		// hacky way to set an existing translation group in onAfterWrite()
+		$translationGroupID = $this->getTranslationGroup();
+		$newTranslation->_TranslationGroupID = $translationGroupID ? $translationGroupID : $this->owner->ID;
+		if($saveTranslation) $newTranslation->write();
+		
+		// run callback on page for translation related hooks
+		$newTranslation->invokeWithExtensions('onTranslatableCreate', $saveTranslation);
+		
+		return $newTranslation;
+	}	
     
 }

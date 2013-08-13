@@ -71,7 +71,7 @@ If you wish, you can redirect the root to the default locale prefix in a number 
 
 **Note:** as this is probably not really a 301 redirect, I'm not sure how searchengines would respond to this - it might be better to stick with the .htaccess solution...	
  
-## Enabling BaseHref ##
+## Enable BaseHref ##
 Although `BaseHref` is deprecated in SilverStripe 3.x, it is still used in some templates to add a link to the homepage (Simple!). To enable its use, add the following to your Page_Controller:
 
 	:::php
@@ -86,3 +86,15 @@ Although `BaseHref` is deprecated in SilverStripe 3.x, it is still used in some 
 
 `Note:` You can use ** $BaseLinkForLocale ** in your templates to create a link to the homepage for the current locale.
 
+## Enable duplicate URLSegments
+
+The LanguagePrefix module supports the use of duplicate URLSegments for different languages as an optional feature, that is disabled by default. When enabled, it will automatically keep the existing URLSegment for new translations. You can now have:
+
+	www.mydomain.com/en/faq
+	www.mydomain.com/nl/faq
+
+To enable this feature, set the following in _config/LanguagePrefix.yml
+
+	enable_duplicate_urlsegments: true
+	
+**Note:** don't forget to ?flush=1. If the admin section was already open, you might have to perform a flush there as well!

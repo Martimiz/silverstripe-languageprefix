@@ -205,6 +205,14 @@ class LanguagePrefix extends DataExtension {
 	 * @param FieldList $fields
 	 */
 	public function updateCMSFields(FieldList $fields) {
+		
+		// If duplicate URLSegments are enabled, replace Translatable by LanguagePrefixTranslatable
+		$enabled = Config::inst()->get('prefixconfig', 'enable_duplicate_urlsegments');
+		if ($enabled) {
+			SiteTree::remove_extension('Translatable');
+			SiteTree::add_extension('LanguagePrefixTranslatable');
+		}
+		
 		$fields->removeByName('URLSegment');
 
 		$prefix = self::get_prefix($this->owner->Locale);
