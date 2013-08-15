@@ -126,7 +126,7 @@ class LanguagePrefix extends DataExtension {
 	 * @return string relative page url
 	 */
 	public function PrefixLink($action = null) {
-		if(!Translatable::is_enabled()) {
+		if(!Translatable::is_enabled() && !$this->owner->hasExtension('LanguagePrefixTranslatable')) {
 			$prefix = '';
 		} else {
 			$prefix = self::get_prefix($this->owner->Locale);
