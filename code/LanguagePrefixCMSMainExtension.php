@@ -7,8 +7,12 @@
 class LanguagePrefixCMSMainExtension extends Extension {
 	function updateEditForm(&$form) {
 		if($form->getName() == 'EditForm' && SiteTree::has_extension("LanguagePrefixTranslatable")) {
-			$form->Fields()->push(new HiddenField('locale','', Translatable::get_current_locale()));
+			$actionPath = $form->FormAction();
+			if (!stristr($actionPath, 'locale=')) {
+				$concat = (stristr($actionPath, '?')) ? '&' : '?';
+				$form->setFormAction($actionPath . $concat . 'locale=' . Translatable::get_current_locale());
+			}
 		}
 	}
-}	
+}
 
