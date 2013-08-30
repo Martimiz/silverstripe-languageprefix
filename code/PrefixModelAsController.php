@@ -43,7 +43,7 @@ class PrefixModelAsController extends ModelAsController {
 			PrefixRootURLController::set_is_at_root();
 
 			// get the homepage from the defaul homepage Translation Group
-			$URLSegment = Translatable::get_homepage_link_by_locale($this->locale);
+			$URLSegment = LanguagePrefix::get_homepage_link_by_locale($this->locale);
 
 			// if no homepage is found in the default translation group for this locale
 			// use the first page in the tree instead

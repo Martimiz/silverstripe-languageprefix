@@ -118,61 +118,11 @@ class LanguagePrefix extends DataExtension {
 	}
 	
 	/**
-	 * add the prefix to your links.
-	 * note: the action is necessary to request the full URLSegment from 
-	 * RelativeLink()
-	 * 
-	 * @param Boolean $action
-	 * @return string relative page url
+	 * Deprecated: use Link() instead. 
 	 */
 	public function PrefixLink($action = null) {
-		if(!Translatable::is_enabled() && !$this->owner->hasExtension('LanguagePrefixTranslatable')) {
-			$prefix = '';
-		} else {
-			$prefix = self::get_prefix($this->owner->Locale);
-		}
-		$link = $this->RelativeLink($action);
-		
-		return Controller::join_links(
-			Director::baseURL(),
-			$prefix,
-			$link
-		);		
-	} 
-	
-	/**
-	 * return a relative link to the page. If $action is true this will leave 
-	 * the URLSegment intact for homepages, for use in form actions, that 
-	 * would otherwise generate a page-not-found. 
-	 * 
-	 * @param boolean action
-	 * @return string relative link
-	 */
-	public function RelativeLink($action = null) {
-		if($this->owner->ParentID && SiteTree::nested_urls()) {
-			$base = $this->owner->Parent()->RelativeLink($this->owner->URLSegment);
-		} else {
-			$base = $this->owner->URLSegment;
-		}
-		// Unset base for homepage URLSegments in their default language.
-		// Homepages with action = true parameter need to retain their 
-		// URLSegment. We can only do this if the homepage is on the root level.
-		// Note: don't use RootURLController::get_homepage_link() because
-		//       it will return the homepage for the Translatable current locale, 
-		//       not the alternate locale used in the Translatable metatag, 
-		//       and the homepage URLSegment cannot be stripped that way    
-		if (
-			empty($action) && !$this->owner->ParentID &&
-			$base == self::get_homepage_link_by_locale($this->owner->Locale)) {
-			
-			$base = null;
-		}
-		
-		// Legacy support
-		if($action === true) $action = null;
-
-		return Controller::join_links($base, '/', $action);
-	}	
+		return $this->owner->Link();
+	} 	
 
 	/**
 	 * Get the RelativeLink value for a home page in another locale. This is found by searching for the default home
@@ -197,6 +147,31 @@ class LanguagePrefix extends DataExtension {
 		}
 		return '';	
 	}
+	
+	/**
+	 * Add the language prefix to the relative link. Be sure to remove the
+	 * homepage $URLSegment.
+	 * 
+	 * @param type $base  the relative link
+	 * @param type $action 
+	 */
+	public function updateRelativeLink(&$base, &$action) {
+				
+		if (empty($action) && !$this->owner->ParentID &&
+			$base == self::get_homepage_link_by_locale($this->owner->Locale)) {
+			
+			$base = null;
+		}
+		
+		$prefix = self::get_prefix($this->owner->Locale);
+			
+		if (!stristr($base, $prefix)) {
+			$base = Controller::join_links(
+				$prefix,
+				$base
+			);
+		}
+	}	
 	
 	/**
 	 * Update the URLsegment in the CMS so it shows the correct language
