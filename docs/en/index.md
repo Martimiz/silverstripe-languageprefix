@@ -12,23 +12,13 @@ PrefixModelAsController. Example:
 Rename the module to 'languageprefix' and copy to the root of your site. Make sure the 
 [Translatable module](https://github.com/silverstripe/silverstripe-translatable) is installed and enabled on your website. The LanguagePrefix module now uses YAML for its configuration. Extensions are enabled by default in _config/languageprefix.yml. Perform ?flush=1 to enable. 
 
-## Create page-links in your template
-To create the proper links in your template use ** $PrefixLink ** instead of ** $Link **:
+### $PrefixLink is now deprecated ###
 
-	:::php
-		<ul>
-		<% loop $Menu(1) %>
-			<li class="$LinkingMode"><a href="$PrefixLink" title="$Title.XML">$MenuTitle.XML</a></li>
-		<% end_loop %>
-		</ul>
+The default SiteTree->Link() function now supports language prefixes, so just use **$Link** in your templates, as you normally would.
 
-However, if you want to support existing templates and continue to use $Link, you may add the following to your Page class:
+Subclassing the Link() function in your Page class is no longer necessary, although PrefixLink is still supported for reasons of backwards compatibility.
 
-	:::php
-		public function Link($action = null) {
-			return $this->PrefixLink($action);
-		}
-`Note:` There is a known issue with the use of a pagelink as a parameter to the ChildrenOf() or the Page() function. These functions don't allow the language prefix. Use URLSegment instead. When in doubt, stick to the $PrefixLink.  
+`Note:` There is a known issue with the use of a **homepage pagelink** as a parameter to the ChildrenOf() or the Page(): Do not use 'en_US/'. You can use '/' or 'en_US/home/' if you wish.
 
 ## Using custom prefixes ##
 By default the module uses the locale as prefix:
@@ -47,7 +37,7 @@ To use custom language prefixes, change the prefixconfig seyttings in your _conf
 	    'en_US': en
 	    'nl_NL': nl
 
-## Redirect root
+## Redirect root ##
 If you wish, you can redirect the root to the default locale prefix in a number of ways, for example using .htaccess or lighttpd configuration redirect rules, to create a 301 redirect. The easiest way is probably to use a Director rule in _config.php. Example (depending on your prefix): 
 
 	:::php
@@ -69,7 +59,7 @@ If you wish, you can redirect the root to the default locale prefix in a number 
 	    rules:
 	        '': '->/en/' 
 
-**Note:** as this is probably not really a 301 redirect, I'm not sure how searchengines would respond to this - it might be better to stick with the .htaccess solution...	
+`Note:` as this is probably not really a 301 redirect, I'm not sure how searchengines would respond to this - it might be better to stick with the .htaccess solution...	
  
 ## Enable BaseHref ##
 Although `BaseHref` is deprecated in SilverStripe 3.x, it is still used in some templates to add a link to the homepage (Simple!). To enable its use, add the following to your Page_Controller:
@@ -101,4 +91,4 @@ To enable this feature, set the following in _config/LanguagePrefix.yml
 
 ## Language switcher
 
-You can use the language switchers that are described [in the Translatable README file](https://github.com/silverstripe/silverstripe-translatable/blob/master/docs/en/index.md#switching-languages), as long as you use `PrefixLink` instead of `Link`. The latter will probably also work, but only if you defined the Link function in the Page as explained [here](#create-page-links-in-your-template). 
+You can use the language switchers that are described [in the Translatable README file](https://github.com/silverstripe/silverstripe-translatable/blob/master/docs/en/index.md#switching-languages).

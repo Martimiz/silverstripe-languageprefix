@@ -12,8 +12,13 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
  	www.mydomain.com/nl/
 
 ## Changes in this version
- * Config settings and the enabling of extensions are now handled by the YAML system (see _config/languageprefix.yml). 
+
+ * RelativeLink() now includes the languageprefix. 
+ * It is no longernecessary to define a Link() function in your class 
+ * PrefixLink() is now deprecated. Use Link() instead
+ * SiteTree::get_by_link() now works for all prefixed links, except for homepage links like '/en_US/': get_by_link() won't retrieve the homepage URLSegment for links that are not empty (or '/').
  
+ * Config settings and the enabling of extensions are now handled by the YAML system (see _config/languageprefix.yml). 
  * Some other minor upgrades to SilverStripe 3.1 
 
 **Note**: I haven't found a way yet to properly insert the #languageprefixroutes between #coreroutes and #adminroutes. So for admin routes to keep working, they are redefined to force priority. Still looking for a real solution… Anyone?   
