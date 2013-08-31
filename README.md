@@ -13,6 +13,7 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
 
 ## Changes in this version
 
+ * Preview mode and Split mode are now supported in the CMS
  * RelativeLink() now includes the languageprefix. 
  * It is no longernecessary to define a Link() function in your class 
  * PrefixLink() is now deprecated. Use Link() instead
