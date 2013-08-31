@@ -228,6 +228,52 @@ class LanguagePrefix extends DataExtension {
 	 */
 	public function HomeLink() {
 		return $this->BaseLinkForLocale();
+	}
+	
+	/**
+	 * Get the prefix out of the way. 
+	 * 
+	 * Note: this will fail for hamepage links like '/en_US/' because 
+	 * Director::get_homepage_link() is now not called from get_by_link() 
+	 * There is no way alternateGetByLink can influence the other parts 
+	 * of the link. So you'll always end up on the default locale homepage.
+	 *
+	 * @param string $URLSegment
+	 * @param int|null $parentID
+	 * @return SiteTree
+	 */
+	public function alternateGetByLink($URLSegment, $parentID) {
+
+		// if this is a valid prefix, just return an empty SiteTree object
+		// SiteTree::get_by_link() will then traverse the other URL parts, 
+		// starting with the urlsegment following the prefix!
+		if (empty($parentID) && $URLSegment && self::valid_prefix($URLSegment)) {
+			return singleton('SiteTree');
+		}
+		
+		// no valid prefix? Leave it to the oter extensions...
+		return false;
 	}	
+	
+	/**
+	 * Is the prefix a valid locale? (@see alternateGetByLink)
+	 * 
+	 * @param string $prefix
+	 * @return boolean
+	 */
+	public static function valid_prefix($prefix) {
+
+		// is this part of the prefix map if there is one?
+		if (!empty(self::$locale_prefix_map)) 
+			return(in_array($prefix, self::$locale_prefix_map));
+
+		// is this part of the allowed languages, if there are any
+		$alowed_locales = Translatable::get_allowed_locales();
+		if (!empty($alowed_locales))
+			return (in_array($prefix, $alowed_locales));
+
+		// is this a valid locale anyway?
+		return (i18n::validate_locale($prefix));
+	}
 }
 
