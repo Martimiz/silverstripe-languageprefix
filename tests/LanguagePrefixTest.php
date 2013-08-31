@@ -917,19 +917,19 @@ class LanguagePrefixTest extends FunctionalTest {
 
 		$this->assertEquals (
 			$parentTranslation->ID,
-			Sitetree::get_by_link($parentTranslation->RelativeLink())->ID,
+			Sitetree::get_by_link($parentTranslation->Link(true))->ID,
 			'Top level pages can be found.'
 		);
 		
 		$this->assertEquals (
 			$childTranslation->ID,
-			SiteTree::get_by_link($childTranslation->RelativeLink())->ID,
+			SiteTree::get_by_link($childTranslation->Link())->ID,
 			'Child pages can be found.'
 		);
 		
 		$this->assertEquals (
 			$grandchildTranslation->ID,
-			SiteTree::get_by_link($grandchildTranslation->RelativeLink())->ID,
+			SiteTree::get_by_link($grandchildTranslation->Link())->ID,
 			'Grandchild pages can be found.'
 		);
 

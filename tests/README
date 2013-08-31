@@ -15,16 +15,20 @@ with two exceptions:
 - test Alternate Get By Link
   --------------------------
   Trying to get property of non-object
-  Replaced instances of:
-  SiteTree::get_by_link($page->Link())
-  by:
-  SiteTree::get_by_link($page->RelativeLink())
+  Added true as a param to the homepage link, because SiteTree::get_by_link()
+  cannot resolve the homepage URLSegment from a prefixed link:
 
-  I'm not sure this is valid. Although get_by_link is seldom used like this
-  in core, I still think this might be an issue... 
+  SiteTree::get_by_link($page->Link(true))
 
-  The only problem I see is in using SiteTree::Page() and SiteTree::ChildrenOf()
-  if these functions are used with a full link as parameter... 
+  There is no way to influence this behaviour.  
+
+  The only issue I see in core, is the use SiteTree::Page() and SiteTree::ChildrenOf().
+
+  SiteTree::get_by_link() will work as if the locale prefix is not there, 
+  just like it would in any other situation, with the exception of homepagelinks 
+  with a locale prefix.  Do not use '/en_US/' in any form. You can use '/' 
+  which will return the homepage for the current locale. Something 
+  like '/en_US/home' or Link(true) is also valid.
   
   
 
