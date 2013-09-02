@@ -194,8 +194,7 @@ class LanguagePrefix extends DataExtension {
 
 		$baseLink = Controller::join_links (
 			Director::absoluteBaseURL(),
-			$prefix . '/',
-			(SiteTree::nested_urls() && $this->owner->ParentID ? $this->owner->Parent()->RelativeLink(true) : null)
+			(SiteTree::nested_urls() && $this->owner->ParentID ? $this->owner->Parent()->RelativeLink(true) : $prefix . '/')
 		);
 				
 		$urlsegment = new SiteTreeURLSegmentField("URLSegment", $this->owner->fieldLabel('URLSegment'));
