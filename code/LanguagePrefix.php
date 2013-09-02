@@ -165,7 +165,7 @@ class LanguagePrefix extends DataExtension {
 		
 		$prefix = self::get_prefix($this->owner->Locale);
 			
-		if (!stristr($base, $prefix)) {
+		if (!preg_match("@^{$prefix}/@i", $base)) {
 			$base = Controller::join_links(
 				$prefix,
 				$base
