@@ -6,7 +6,7 @@
  */
 class LanguagePrefixCMSMainExtension extends Extension {
 	function updateEditForm(&$form) {
-		if($form->getName() == 'EditForm' && SiteTree::has_extension("LanguagePrefixTranslatable")) {
+		if($form->getName() == 'EditForm' && SiteTree::has_extension("Translatable")) {
 			$actionPath = $form->FormAction();
 			if (!stristr($actionPath, 'locale=')) {
 				$concat = (stristr($actionPath, '?')) ? '&' : '?';
