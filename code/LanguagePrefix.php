@@ -115,6 +115,12 @@ class LanguagePrefix extends DataExtension {
 	public function __construct() {
 		parent::__construct();
 		self::load_prefix_map();
+
+		// If duplicate URLSegments make Translatable allow that
+		$enabled = Config::inst()->get('prefixconfig', 'enable_duplicate_urlsegments');
+		if ($enabled) {
+			Config::inst()->update('Translatable', 'enforce_global_unique_urls', false);
+		}		
 	}
 	
 	/**
@@ -180,13 +186,6 @@ class LanguagePrefix extends DataExtension {
 	 * @param FieldList $fields
 	 */
 	public function updateCMSFields(FieldList $fields) {
-		
-		// If duplicate URLSegments are enabled, replace Translatable by LanguagePrefixTranslatable
-		$enabled = Config::inst()->get('prefixconfig', 'enable_duplicate_urlsegments');
-		if ($enabled) {
-			SiteTree::remove_extension('Translatable');
-			SiteTree::add_extension('LanguagePrefixTranslatable');
-		}
 		
 		$fields->removeByName('URLSegment');
 
@@ -274,5 +273,24 @@ class LanguagePrefix extends DataExtension {
 		// is this a valid locale anyway?
 		return (i18n::validate_locale($prefix));
 	}
+	
+	/**
+	 * Remove the suffix added by translatable from the URLSegment if 
+	 * duplicate URLSegments are allowed
+	 * 
+	 * @Note this should be a temporary fix as Translatable shouldn't 
+	 *       enforce the suffix in this case anyway!
+	 */
+	public function onBeforeWrite() {
+		if (empty($this->ID)) {
+			if(!Config::inst()->get('prefixconfig', 'enable_duplicate_urlsegments')) {
+				$suffix = '-' . i18n::convert_rfc1766($this->owner->Locale);
+
+				$segment = $this->owner->URLSegment;
+				$newSegment = preg_replace("@({$suffix})$@i", '', $segment);
+				$this->owner->URLSegment = $newSegment;
+			}
+		}
+	}	
 }
 
