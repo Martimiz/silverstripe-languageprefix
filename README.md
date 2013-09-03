@@ -13,6 +13,7 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
 
 ## Changes in this version
 
+ * LanguagePrefix now uses Translatable's enable_duplicate_urlsegments config setting when allowing duplicate URLSegments
  * Preview mode and Split mode are now supported in the CMS
  * RelativeLink() now includes the languageprefix. 
  * It is no longernecessary to define a Link() function in your class 
