@@ -283,7 +283,7 @@ class LanguagePrefix extends DataExtension {
 	 */
 	public function onBeforeWrite() {
 		if (empty($this->ID)) {
-			if(!Config::inst()->get('prefixconfig', 'enable_duplicate_urlsegments')) {
+			if(Config::inst()->get('prefixconfig', 'enable_duplicate_urlsegments')) {
 				$suffix = '-' . i18n::convert_rfc1766($this->owner->Locale);
 
 				$segment = $this->owner->URLSegment;
