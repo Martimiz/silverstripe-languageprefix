@@ -272,25 +272,6 @@ class LanguagePrefix extends DataExtension {
 
 		// is this a valid locale anyway?
 		return (i18n::validate_locale($prefix));
-	}
-	
-	/**
-	 * Remove the suffix added by translatable from the URLSegment if 
-	 * duplicate URLSegments are allowed
-	 * 
-	 * @Note this should be a temporary fix as Translatable shouldn't 
-	 *       enforce the suffix in this case anyway!
-	 */
-	public function onBeforeWrite() {
-		if (empty($this->ID)) {
-			if(Config::inst()->get('prefixconfig', 'enable_duplicate_urlsegments')) {
-				$suffix = '-' . i18n::convert_rfc1766($this->owner->Locale);
-
-				$segment = $this->owner->URLSegment;
-				$newSegment = preg_replace("@({$suffix})$@i", '', $segment);
-				$this->owner->URLSegment = $newSegment;
-			}
-		}
 	}	
 }
 
