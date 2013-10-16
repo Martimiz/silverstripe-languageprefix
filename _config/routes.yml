@@ -1,36 +1,8 @@
 ---
-Name: languageprefix
-After: '#modelascontrollerroutes'
+Name: modelascontrollerroutes
+After: cms/routes#modelascontrollerroutes
 ---
 Director:
-  rules:
-    '': 'PrefixModelAsController'
-    '$Prefix/$URLSegment//$Action/$ID/$OtherID': 'PrefixModelAsController'
----
-Name: lpcoreroutes
-After: '#languageprefix'
----
-Director:
-  rules:
-    'Security//$Action/$ID/$OtherID': 'Security'
-    '$Controller//$Action/$ID/$OtherID':  '*'
-    'api/v1/live': 'VersionedRestfulServer'
-    'api/v1': 'RestfulServer'
-    'soap/v1': 'SOAPModelAccess'
-    'dev': 'DevelopmentAdmin'
-    'interactive': 'SapphireREPL'
----
-Name: lpadminroutes
-After: '#languageprefix'
----
-Director:
-  rules:
-    'admin': 'AdminRootController'
-    'dev/buildcache/$Action': 'RebuildStaticCacheTask'
----
-Name: lplegacycmsroutes
-After: '#languageprefix'
----
-Director:
-  rules:
-    'admin/cms': '->admin/pages'
+    rules:
+        '': 'PrefixModelAsController'
+        '$Prefix/$URLSegment//$Action/$ID/$OtherID': 'PrefixModelAsController'
