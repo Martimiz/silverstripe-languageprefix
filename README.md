@@ -23,8 +23,6 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
  * Config settings and the enabling of extensions are now handled by the YAML system (see _config/languageprefix.yml). 
  * Some other minor upgrades to SilverStripe 3.1 
 
-**Note**: I haven't found a way yet to properly insert the #languageprefixroutes between #coreroutes and #adminroutes. So for admin routes to keep working, they are redefined to force priority. Still looking for a real solution… Anyone?   
-
 ## Usage
 
 Setup and usage documentation: [docs/en/index.md](docs/en/index.md)
@@ -36,4 +34,4 @@ Setup and usage documentation: [docs/en/index.md](docs/en/index.md)
 
 ## Maintainers ##
 
- * Martine Bloem (Martimiz) <martine at balbus dot nl>
+ * Martine Bloem (Martimiz)
