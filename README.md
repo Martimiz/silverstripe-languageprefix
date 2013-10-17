@@ -21,4 +21,4 @@ Setup and usage documentation: docs/en/index.md
 
 ## Maintainers ##
 
- * Martine Bloem (Martimiz) <martine at balbus dot nl>
+ * Martine Bloem (Martimiz)
