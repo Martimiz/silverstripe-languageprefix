@@ -1,6 +1,6 @@
 {
 	"name": "martimiz/silverstripe-languageprefix",
-	"description": "Extends silverstripe-translatable to allow for (custom) language prefixes on multilingual sites",
+	"description": "Extends silverstripe-translatable to allow for (custom) language prefixes on multilingual sites.",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "languageprefix", "cms", "multilingual", "i18n", "translatable", "localization", "globalization"],
 	"homepage": "https://github.com/Martimiz/silverstripe-languageprefix",
