@@ -36,7 +36,7 @@ class PrefixModelAsController extends ModelAsController {
 
 			$this->Locale = Translatable::default_locale();
 
-			if(Config::inst()->get('prefixconfig', 'ignore_default_locale') {
+			if(Config::inst()->get('prefixconfig', 'ignore_default_locale')) {
 				$pattern = '$URLSegment//$Action/$ID/$OtherID';
 
 				$request = new SS_HTTPRequest(
