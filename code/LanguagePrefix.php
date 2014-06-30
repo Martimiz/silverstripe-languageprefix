@@ -153,6 +153,7 @@ class LanguagePrefix extends DataExtension {
 		}
 		return '';	
 	}
+
 	
 	/**
 	 * Add the language prefix to the relative link. Be sure to remove the
@@ -162,13 +163,17 @@ class LanguagePrefix extends DataExtension {
 	 * @param type $action 
 	 */
 	public function updateRelativeLink(&$base, &$action) {
-				
+		
+		if(Config::inst()->get('prefixconfig', 'ignore_default_locale') && 
+			$this->owner->Locale == Translatable::default_locale()) {
+			return;
+		}
+
 		if (empty($action) && !$this->owner->ParentID &&
 			$base == self::get_homepage_link_by_locale($this->owner->Locale)) {
-			
 			$base = null;
 		}
-		
+
 		$prefix = self::get_prefix($this->owner->Locale);
 			
 		if (!preg_match("@^{$prefix}/@i", $base)) {
