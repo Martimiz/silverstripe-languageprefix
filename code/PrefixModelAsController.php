@@ -34,8 +34,9 @@ class PrefixModelAsController extends ModelAsController {
 		// // Or it means that we are ignoring prefixes for this (default) locale
 		if (!$this->setLocale($prefix)) {
 
+			$this->Locale = Translatable::default_locale();
+
 			if(Config::inst()->get('prefixconfig', 'ignore_default_locale') {
-				$this->Locale = Translatable::default_locale();
 				$pattern = '$URLSegment//$Action/$ID/$OtherID';
 
 				$request = new SS_HTTPRequest(
@@ -53,7 +54,6 @@ class PrefixModelAsController extends ModelAsController {
 
 			}
 
-			$this->Locale = Translatable::default_locale();
 			return $this->showPageNotFound();
 
 		} else {
