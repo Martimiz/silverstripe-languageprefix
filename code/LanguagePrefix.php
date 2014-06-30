@@ -49,6 +49,13 @@ class LanguagePrefix extends DataExtension {
 	public static $locale_prefix_map;
 
 	/**
+	 * ignore language prefix on the default locale
+	 * 
+	 * @var bool
+	 */
+	public static $ignore_default_locale;
+
+	/**
 	 * return the language prefix for the current locale. If no locale is given,
 	 * the default Translatable locale is assumed. 
 	 * 
