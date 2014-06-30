@@ -30,7 +30,7 @@ To use custom language prefixes, change the prefixconfig seyttings in your _conf
 
 	:::php
 	---
-	Name: languageprefix-config
+	Name: languageprefixconfig
 	---
 	prefixconfig:
 	  locale_prefix_map:
