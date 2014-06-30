@@ -8,6 +8,7 @@ SiteTree:
 Name: languageprefix-config
 ---
 prefixconfig:
-  locale_prefix_map: ''
+  locale_prefix_map:
+  ignore_default_locale: false
   enable_duplicate_urlsegments: false
 
