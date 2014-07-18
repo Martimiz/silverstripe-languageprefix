@@ -187,25 +187,19 @@ class LanguagePrefix extends DataExtension {
 	 */
 	public function updateCMSFields(FieldList $fields) {
 		
-		$fields->removeByName('URLSegment');
+		// add prefix to rootpage URLSegmen only!
+		if (!$this->owner->ParentID) {
+			$prefix = self::get_prefix($this->owner->Locale);
 
-		$prefix = self::get_prefix($this->owner->Locale);
+			if ($prefix) {
 
-		$baseLink = Controller::join_links (
-			Director::absoluteBaseURL(),
-			(SiteTree::nested_urls() && $this->owner->ParentID ? $this->owner->Parent()->RelativeLink(true) : $prefix . '/')
-		);
-				
-		$urlsegment = new SiteTreeURLSegmentField("URLSegment", $this->owner->fieldLabel('URLSegment'));
-		$urlsegment->setURLPrefix($baseLink);
-		$helpText = (SiteTree::config()->nested_urls && count($this->owner->Children())) ? $this->owner->fieldLabel('LinkChangeNote') : '';
-		if(!Config::inst()->get('URLSegmentFilter', 'default_allow_multibyte')) {
-			$helpText .= $helpText ? '<br />' : '';
-			$helpText .= _t('SiteTreeURLSegmentField.HelpChars', ' Special characters are automatically converted or removed.');
-		}
-		$urlsegment->setHelpText($helpText);
-		
-		$fields->addFieldToTab('Root.Main', $urlsegment, 'MenuTitle');		
+				$urlsegmentField = $fields->dataFieldByName('URLSegment');
+
+				$urlPrefix = $urlsegmentField->getURLPrefix() . $prefix . '/';
+
+				$urlsegmentField->setURLPrefix($urlPrefix);
+			}
+		}		
 	}
 	
 	/**
