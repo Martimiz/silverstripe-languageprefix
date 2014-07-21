@@ -182,11 +182,7 @@ class PrefixModelAsController extends ModelAsController {
 			$filter = array('URLSegment' => $URLSegment);
 			if ($useParentIDFilter) $filter['ParentID'] = (int)$parentID;
 			$pages = SiteTree::get()->filter($filter);
-			
-			$Xpages = DataObject::get(
-				'SiteTree',
-				"\"URLSegment\" = '$URLSegment'" . ($useParentIDFilter ? ' AND "ParentID" = ' . (int)$parentID : '')
-			);
+
 			if($pages && $pages->Count() == 1) { return $pages->First(); };
 		}
 
