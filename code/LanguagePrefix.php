@@ -266,6 +266,14 @@ class LanguagePrefix extends DataExtension {
 
 		// is this a valid locale anyway?
 		return (i18n::validate_locale($prefix));
-	}	
+	}
+
+	/**
+	 * Returns the prefix name for this page
+	 * Useful for showing the prefix name rather than the full nice name or code
+	 */
+	public function getPagePrefix() {
+		return self::get_prefix($this->owner->Locale);
+	}
 }
 
