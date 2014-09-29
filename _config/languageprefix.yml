@@ -1,13 +1,14 @@
 ---
-Name: languageprefix-extensions
+Name: languageprefixextensions
 ---
 SiteTree:
   extensions:
     ['LanguagePrefix'] 
 ---
-Name: languageprefix-config
+Name: languageprefixconfig
 ---
 prefixconfig:
-  locale_prefix_map: ''
+  locale_prefix_map:
+  ignore_default_locale: false
   enable_duplicate_urlsegments: false
 

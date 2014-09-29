@@ -29,17 +29,37 @@ class PrefixModelAsController extends ModelAsController {
 		if (!$prefix = $this->request->param('Prefix')) {
 			$prefix = LanguagePrefix::get_prefix();
 		}
-		
+
 		// No locale means the prefix might be an old URL...
+		// // Or it means that we are ignoring prefixes for this (default) locale
 		if (!$this->setLocale($prefix)) {
 
 			$this->Locale = Translatable::default_locale();
+
+			if(Config::inst()->get('prefixconfig', 'ignore_default_locale')) {
+				$pattern = '$URLSegment//$Action/$ID/$OtherID';
+
+				$request = new SS_HTTPRequest(
+					$this->request->httpMethod(),
+					$this->request->getURL(),
+					$this->request->getVars(),
+					$this->request->postVars(),
+					$this->request->getBody()
+				);
+
+				if($request->match($pattern, true)) {
+					$this->setRequest($request);
+					return parent::getNestedController();
+				}
+
+			}
+
 			return $this->showPageNotFound();
 
 		} else {
 			$URLSegment = $this->request->param('URLSegment');
 		}	
-		
+
 		// Empty URLSegment? Try and get the homepage for the current locale
 		if(empty($URLSegment)) {
 			PrefixRootURLController::set_is_at_root();
@@ -72,7 +92,7 @@ class PrefixModelAsController extends ModelAsController {
 		Translatable::enable_locale_filter();
 		
 		$filter = array('URLSegment' => Convert::raw2sql($URLSegment));
-		if (SiteTree::nested_urls()) $filter['ParentID'] = '0'; 
+		if (Config::inst()->get('SiteTree', 'nested_urls')) $filter['ParentID'] = '0'; 
 		$sitetree = SiteTree::get()->filter($filter)->First();
 			    
 		
