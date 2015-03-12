@@ -71,9 +71,15 @@ class PrefixModelAsController extends ModelAsController {
 		// to /en/englishHomePage/ where I'd rather have a 404!!
 		Translatable::enable_locale_filter();
 		
-		$filter = array('URLSegment' => Convert::raw2sql($URLSegment));
-		if (SiteTree::nested_urls()) $filter['ParentID'] = '0'; 
-		$sitetree = SiteTree::get()->filter($filter)->First();
+		// make sure multibyte urls are supported 
+		$sitetree = DataObject::get_one(
+			'SiteTree', 
+			sprintf(
+				'"SiteTree"."URLSegment" = \'%s\' %s', 
+				Convert::raw2sql(rawurlencode($URLSegment)), 
+				(SiteTree::config()->nested_urls ? 'AND "SiteTree"."ParentID" = 0' : null)
+			)
+		);
 			    
 		
 		// As in the original ModelAsController: if no page can be found, check if it
