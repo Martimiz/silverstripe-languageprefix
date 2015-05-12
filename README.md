@@ -1,5 +1,7 @@
 # LanguagePrefix module for SilverStripe CMS #
 
+## Note: this is a test version
+
  * Supports SilverStripe 3.1.x + 
  * For SilverStripe 3.0.x use version 1.0
 
