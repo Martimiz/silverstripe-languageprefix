@@ -163,20 +163,28 @@ class LanguagePrefix extends DataExtension {
 	 */
 	public function updateRelativeLink(&$base, &$action) {
 				
-		if (empty($action) && !$this->owner->ParentID &&
-			$base == self::get_homepage_link_by_locale($this->owner->Locale)) {
-			
-			$base = null;
-		}
+		// if the default locale should be displayed without prefix
+		// then skip this - for the default locale only
+		$disablePrefixForDefaultLang = Config::inst()->get('prefixconfig', 'disable_prefix_for_default_lang');
+		$isDefaultLocale = ($this->owner->Locale == Translatable::default_locale())? true: false; 
 		
-		$prefix = self::get_prefix($this->owner->Locale);
-			
-		if (!preg_match("@^{$prefix}/@i", $base)) {
-			$base = Controller::join_links(
-				$prefix,
-				$base
-			);
-		}
+		if (!$disablePrefixForDefaultLang || !$isDefaultLocale) {
+
+			if (empty($action) && !$this->owner->ParentID &&
+				$base == self::get_homepage_link_by_locale($this->owner->Locale)) {
+
+				$base = null;
+			}
+
+			$prefix = self::get_prefix($this->owner->Locale);
+
+			if (!preg_match("@^{$prefix}/@i", $base)) {
+				$base = Controller::join_links(
+					$prefix,
+					$base
+				);
+			}
+		}	
 	}	
 	
 	/**
