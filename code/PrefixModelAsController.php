@@ -59,7 +59,7 @@ class PrefixModelAsController extends ModelAsController {
 			// while disable_prefix_for_default_lang is set, so
 			// better redirect right away to avoid duplicate content.
 			// should be a 301 permanent redirect!
-			if (!$onRoot && $disablePrefixForDefaultLang && $this->locale = Translatable::default_locale()) {
+			if (!$onRoot && $disablePrefixForDefaultLang && $this->locale == Translatable::default_locale()) {
 				$url = Controller::join_links(Director::baseURL(), $URLSegment);
 				return $this->redirect($url, 301);
 			}	

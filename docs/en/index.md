@@ -92,3 +92,12 @@ To enable this feature, set the following in _config/LanguagePrefix.yml
 ## Language switcher
 
 You can use the language switchers that are described [in the Translatable README file](https://github.com/silverstripe/silverstripe-translatable/blob/master/docs/en/index.md#switching-languages).
+
+## Disable the prefix for the default locale
+You can now disable the prefix for the default locale by setting the following in your _config/LanguagePrefix.yml:
+
+	disable_prefix_for_default_lang: true
+
+This wil create links without prefix for the current locale and do a 301 permanent redirect for urls that still include the prefix.
+ 
+
