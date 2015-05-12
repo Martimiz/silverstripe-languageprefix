@@ -32,9 +32,22 @@ class PrefixModelAsController extends ModelAsController {
 		
 		// No locale means the prefix might be an old URL...
 		if (!$this->setLocale($prefix)) {
-
+			
 			$this->Locale = Translatable::default_locale();
-			return $this->showPageNotFound();
+
+			$disablePrefixForDefaultLang = Config::inst()->get('prefixconfig', 'disable_prefix_for_default_lang');
+		
+			// if showing the default site without prefix is enabled
+			if ($disablePrefixForDefaultLang) {
+				// assume the prefix isn't a prefix, but part of the 
+				// URLSegment
+				$URLSegment = Controller::join_links(
+					$prefix,
+					$this->request->param('URLSegment')
+				);
+			} else {
+				return $this->showPageNotFound();
+			}
 
 		} else {
 			$URLSegment = $this->request->param('URLSegment');
