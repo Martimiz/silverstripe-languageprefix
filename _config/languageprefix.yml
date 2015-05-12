@@ -10,4 +10,4 @@ Name: languageprefix-config
 prefixconfig:
   locale_prefix_map: ''
   enable_duplicate_urlsegments: false
-
+  disable_prefix_for_default_lang: true
