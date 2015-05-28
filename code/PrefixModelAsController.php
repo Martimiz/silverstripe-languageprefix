@@ -15,6 +15,59 @@ class PrefixModelAsController extends ModelAsController {
 	 */
 	protected static $default_homepage_link = 'home';
 	
+	/**
+	 * @uses ModelAsController::getNestedController()
+	 * @param SS_HTTPRequest $request
+	 * @param DataModel $model
+	 * @return SS_HTTPResponse
+	 */
+	public function handleRequest(SS_HTTPRequest $request, DataModel $model) {
+		
+		// Check Translatable dependency
+		if (!class_exists('Translatable') || 
+		    (!SiteTree::has_extension('Translatable')  &&
+		    !SiteTree::has_extension('LanguagePrefixTranslatable'))
+		) {
+			throw new Exception('Dependency error: the LanguagePrefix module expects the Translatable module.');
+		}
+		
+		$disablePrefixForDefaultLang = Config::inst()->get('prefixconfig', 'disable_prefix_for_default_lang');
+
+		$firstSegment = $request->param('URLSegment');
+		
+		if ($firstSegment) {
+			$prefixUsed = $this->setLocale($firstSegment);
+
+			$defaultLocale = Translatable::default_locale();
+			$isDefaultLocale = ($this->locale == $defaultLocale);
+
+			if ($prefixUsed) {
+				if ($isDefaultLocale && $disablePrefixForDefaultLang) {
+					$url = substr($request->getURL(true), strlen($firstSegment));
+					return $this->redirect($url, 301);
+				} 
+				else {
+					$request->shiftAllParams();
+					$request->shift(1);				
+				}
+			}
+			else {
+				/*
+				 *  if no prefix is used but $disablePrefixForDefaultLang 
+				 *  is set, we go on like nothing happened. Otherwise a
+				 *  404 is generated. @todo: maybe we should redirect 
+				 *  pages that do actually exist, because this is a bit 
+				 *  harsh?
+				 */	
+				if (!$isDefaultLocale || !$disablePrefixForDefaultLang) {
+					return $this->showPageNotFound();
+				}
+			}
+		}
+
+		return parent::handleRequest($request, $model);
+	}	
+	
 	public function getNestedController() {
 		
 		$onRoot = false;
