@@ -197,23 +197,17 @@ class LanguagePrefix extends DataExtension {
 	 */
 	public function updateCMSFields(FieldList $fields) {
 		
-		$disablePrefixForDefaultLang = Config::inst()->get('prefixconfig', 'disable_prefix_for_default_lang');
-		$isDefaultLocale = ($this->owner->Locale == Translatable::default_locale())? true: false; 
+		$prefix = self::get_prefix($this->owner->Locale);
 		
-		if (!$disablePrefixForDefaultLang || !$isDefaultLocale) {		
+		if ($prefix) {		
 		
 			// add prefix to rootpage URLSegment only!
 			if (!$this->owner->ParentID) {
-				$prefix = self::get_prefix($this->owner->Locale);
-
-				if ($prefix) {
-
 					$urlsegmentField = $fields->dataFieldByName('URLSegment');
 
 					$urlPrefix = $urlsegmentField->getURLPrefix() . $prefix . '/';
 
 					$urlsegmentField->setURLPrefix($urlPrefix);
-				}
 			}		
 		}
 	}
