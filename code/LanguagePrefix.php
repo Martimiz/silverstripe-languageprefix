@@ -5,11 +5,7 @@
  * PrefixModelAsController. Example:
  * 
  *     www.mydomain.com/en/
- *     www.mydomain.com/nl/
- * 
- * The LanguagePrefix_Controller is an extension to your Page_Controller, providing 
- * a HomeLink() function that you can use to link to the homepage for the current 
- * locale in your templates: $HomeLink
+ *     www.mydomain.com/nl
  * 
  * PrefixModelAsController replaces ModelAsController and RootURLController in
  * the YAML routes.
@@ -17,26 +13,12 @@
  * <h2>Configuration</h2>
  * 
  * <h3>Enable the LanguagePrefix module</h3>
- * Add this to your _config.php
+ * Add this to your languageprefix.yml
  * 
- *     Object::add_extension('Page', 'LanguagePrefix'); 
- *     Object::add_extension('Page_Controller', 'LanguagePrefix_Controller'); 
- * 
- * <h3>Links</h3>
- * Add the following function to your Page class, to make sure that the correct 
- * links are created:
- * 
- * 	public function Link($action = null) {
- *		return $this->PrefixLink($action);
- *	}
- * 
- * <h3>BasHref support</h3>
- * $BaseHref is deprecated, but still exists in the Simple Template. To
- * make it work, add this to your Page_Controller:
- * 
- *	public function BaseHref() {
- *		return $this->HomeLink();
- *	} 
+ * SiteTree:
+ *   extensions:
+ *     ['LanguagePrefix'] 
+ *  
  */
 class LanguagePrefix extends DataExtension {
 
