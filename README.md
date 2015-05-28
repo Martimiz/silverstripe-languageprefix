@@ -2,7 +2,9 @@
 
 ## Note: this is a test version
 
-Rewrite of version 2.0. The main difference is that the Prefix is no longer a separate url param, but is extracted from the URLSegment instead. This allows for more flexibility - for instance to optionally use urls without prefix for the default language.
+Rewrite of version 2.0. The main difference is that the Prefix is no longer a separate url param, but is extracted from the URLSegment instead. This allows for more flexibility - for instance to optionally use urls without prefix for the default language. 
+
+*Note: this version should still be backwards compatible. Please create an issue if you find any problems* 
 
  * Supports SilverStripe 3.1.x + 
  * For SilverStripe 3.0.x use version 1.0
