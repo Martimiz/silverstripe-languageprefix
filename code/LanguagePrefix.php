@@ -56,8 +56,13 @@ class LanguagePrefix extends DataExtension {
 	 * @return string prefix
 	 */
 	public static function get_prefix($locale = null) {
-		if (!$locale) $locale = Translatable::default_locale();
-
+		$defaultLocale = Translatable::default_locale();
+		if (!$locale) $locale = $defaultLocale;
+		
+		// No prefix for defaultLocale if disabled
+		$disablePrefixForDefaultLang = Config::inst()->get('prefixconfig', 'disable_prefix_for_default_lang');
+		if ($disablePrefixForDefaultLang && ($defaultLocale == $locale)) return '';
+		
 		if (isset(self::$locale_prefix_map[$locale])) {
 			$prefix = self::$locale_prefix_map[$locale];
 		} else {

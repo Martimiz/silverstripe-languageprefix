@@ -59,9 +59,9 @@ class PrefixModelAsController extends ModelAsController {
 				 *  pages that do actually exist, because this is a bit 
 				 *  harsh?
 				 */	
-				if (!$isDefaultLocale || !$disablePrefixForDefaultLang) {
-					return $this->showPageNotFound();
-				}
+				//if (!$isDefaultLocale || !$disablePrefixForDefaultLang) {
+				//	return $this->showPageNotFound();
+				//}
 			}
 		}
 
