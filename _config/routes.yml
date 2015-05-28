@@ -5,4 +5,4 @@ After: cms/routes#modelascontrollerroutes
 Director:
     rules:
         '': 'PrefixModelAsController'
-        '$Prefix/$URLSegment//$Action/$ID/$OtherID': 'PrefixModelAsController'
+        '$URLSegment//$Action/$ID/$OtherID': 'PrefixModelAsController'
