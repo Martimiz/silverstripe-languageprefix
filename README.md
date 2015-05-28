@@ -2,6 +2,8 @@
 
 ## Note: this is a test version
 
+Rewrite of version 2.0. The main difference is that the Prefix is no longer a separate url param, but is extracted from the URLSegment instead. This allows for more flexibility - for instance to optionally use urls without prefix for the default language.
+
  * Supports SilverStripe 3.1.x + 
  * For SilverStripe 3.0.x use version 1.0
 
@@ -15,6 +17,8 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
 
 ## Changes in this version
 
+ * $Prefix segment is stripped from the url rule (routes.yml)
+ * PrefixModelAsController::handleRequest() now handles extracting the prefix from the url, and shifts the url and other params if need be
  * Optionally `set disable_prefix_for_default_lang` to remove the prefix from the default language
 
 ## Usage
