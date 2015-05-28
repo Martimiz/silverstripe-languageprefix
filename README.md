@@ -15,15 +15,7 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
 
 ## Changes in this version
 
- * LanguagePrefix now uses Translatable's enable_duplicate_urlsegments config setting when allowing duplicate URLSegments
- * Preview mode and Split mode are now supported in the CMS
- * RelativeLink() now includes the languageprefix. 
- * It is no longernecessary to define a Link() function in your class 
- * PrefixLink() is now deprecated. Use Link() instead
- * SiteTree::get_by_link() now works for all prefixed links, except for homepage links like '/en_US/': get_by_link() won't retrieve the homepage URLSegment for links that are not empty (or '/').
- 
- * Config settings and the enabling of extensions are now handled by the YAML system (see _config/languageprefix.yml). 
- * Some other minor upgrades to SilverStripe 3.1 
+ * Optionally `set disable_prefix_for_default_lang` to remove the prefix from the default language
 
 ## Usage
 
@@ -36,4 +28,4 @@ Setup and usage documentation: [docs/en/index.md](docs/en/index.md)
 
 ## Maintainers ##
 
- * Martine Bloem (Martimiz)
+ * Martine Bloem (martimiz at gmail dot com)
