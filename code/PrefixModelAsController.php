@@ -68,57 +68,15 @@ class PrefixModelAsController extends ModelAsController {
 		return parent::handleRequest($request, $model);
 	}	
 	
+	/**
+	 * Try to determine the controller for the current request.
+	 * 
+	 * @return type Controller
+	 */
 	public function getNestedController() {
 		
-		$onRoot = false;
+		$URLSegment = $this->request->param('URLSegment');
 		
-		// Check Translatable dependency
-		if (!class_exists('Translatable') || 
-		    (!SiteTree::has_extension('Translatable')  &&
-		    !SiteTree::has_extension('LanguagePrefixTranslatable'))
-		) {
-			throw new Exception('Dependency error: the LanguagePrefix module expects the Translatable module.');
-		} 
-		
-		// No prefix means we're on root. set the prefix to the default
-		if (!$prefix = $this->request->param('Prefix')) {
-			$onRoot = true;
-			$prefix = LanguagePrefix::get_prefix();
-		}
-		
-		$disablePrefixForDefaultLang = Config::inst()->get('prefixconfig', 'disable_prefix_for_default_lang');		
-		
-		// No locale means the prefix might be an old URL...
-		if (!$this->setLocale($prefix)) {
-			
-			$this->Locale = Translatable::default_locale();
-
-			// if showing the default site without prefix is enabled
-			if ($disablePrefixForDefaultLang) {
-				// assume the prefix isn't a prefix, but part of the 
-				// URLSegment
-				$URLSegment = Controller::join_links(
-					$prefix,
-					$this->request->param('URLSegment')
-				);
-			} else {
-				return $this->showPageNotFound();
-			}
-
-		} else {
-			$URLSegment = $this->request->param('URLSegment');
-			
-			// we have found a prefix while on the default locale, 
-			// while disable_prefix_for_default_lang is set, so
-			// better redirect right away to avoid duplicate content.
-			// should be a 301 permanent redirect!
-			if (!$onRoot && $disablePrefixForDefaultLang && $this->locale == Translatable::default_locale()) {
-				$url = Controller::join_links(Director::baseURL(), $URLSegment);
-				return $this->redirect($url, 301);
-			}	
-		}	
-		
-		// Empty URLSegment? Try and get the homepage for the current locale
 		if(empty($URLSegment)) {
 			PrefixRootURLController::set_is_at_root();
 
@@ -143,11 +101,12 @@ class PrefixModelAsController extends ModelAsController {
 				}
 			}			
 		}
+		
 		// We have an URLSegment: find the page with this segment - within the current locale
-		// In the original ModelAsController the locale filter is disabled for this query,
-		// meaning /nl/englishHomePage/ will be found and be redirected later on
+			// In the original ModelAsController the locale filter is disabled for this query,
+			// meaning /nl/englishHomePage/ will be found and be redirected later on
 		// to /en/englishHomePage/ where I'd rather have a 404!!
-		Translatable::enable_locale_filter();
+		Translatable::enable_locale_filter();		
 		
 		// make sure multibyte urls are supported 
 		$sitetree = DataObject::get_one(
@@ -158,7 +117,6 @@ class PrefixModelAsController extends ModelAsController {
 				(SiteTree::config()->nested_urls ? 'AND "SiteTree"."ParentID" = 0' : null)
 			)
 		);
-			    
 		
 		// As in the original ModelAsController: if no page can be found, check if it
 		// has been renamed or relocated - again: within the current locale!!!
@@ -204,7 +162,7 @@ class PrefixModelAsController extends ModelAsController {
 
 
 		return self::controller_for($sitetree, $this->request->param('Action'));		
-	}	
+	}
 	
 	/**
 	 * Distill the locale from the URL's language prefix. If the prefix isn't a
