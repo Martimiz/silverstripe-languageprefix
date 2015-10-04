@@ -200,7 +200,7 @@ class LanguagePrefix extends DataExtension {
 	 * @return string link to the homepage for the current locale 
 	 */
 	public function BaseLinkForLocale() {
-		$prefix = LanguagePrefix::get_prefix();
+		$prefix = LanguagePrefix::get_prefix($this->owner->Locale);
 		$prefixLink = ($prefix)? $prefix . '/' : '';
 		
 		return Controller::join_links(
