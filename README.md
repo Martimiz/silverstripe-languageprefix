@@ -1,10 +1,9 @@
 # LanguagePrefix module for SilverStripe CMS #
 
-## Note: this is a test version
+Rewrite of version 2.0. The Prefix is no longer a separate url param, but is extracted from the URLSegment instead. 
+This allows for greater flexibility - you can now optionally use urls without prefix for the default language. 
 
-Rewrite of version 2.0. The main difference is that the Prefix is no longer a separate url param, but is extracted from the URLSegment instead. This allows for more flexibility - for instance to optionally use urls without prefix for the default language. 
-
-*Note: this version should still be backwards compatible. Please create an issue if you find any problems* 
+*Note: this version should be backwards compatible with version 2.0. Please create an issue if you find any problems* 
 
  * Supports SilverStripe 3.1.x + 
  * For SilverStripe 3.0.x use version 1.0
@@ -12,7 +11,8 @@ Rewrite of version 2.0. The main difference is that the Prefix is no longer a se
 ## Introduction ##
 
 The Language Prefix module allows you to create links with a language prefix
-for multilingual websites using [SilverStripe Translatable](https://github.com/silverstripe/silverstripe-translatable). Example:
+for multilingual websites using [SilverStripe Translatable](https://github.com/silverstripe/silverstripe-translatable). 
+Example:
  
 	www.mydomain.com/en/
  	www.mydomain.com/nl/
@@ -21,7 +21,7 @@ for multilingual websites using [SilverStripe Translatable](https://github.com/s
 
  * $Prefix segment is stripped from the url rule (routes.yml)
  * PrefixModelAsController::handleRequest() now handles extracting the prefix from the url, and shifts the url and other params if need be
- * Optionally `set disable_prefix_for_default_lang` to remove the prefix from the default language
+ * Optionally set `disable_prefix_for_default_lang` to remove the prefix from the default language
 
 ## Usage
 
