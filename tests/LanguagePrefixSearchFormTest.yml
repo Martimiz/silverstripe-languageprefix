@@ -1,18 +1,18 @@
 SiteTree:
-   searchformholder:
-      URLSegment: searchformholder
-      Title: searchformholder
-   publishedPage:
-      Title: publishedPage
-      Content: English content
+  searchformholder:
+    URLSegment: searchformholder
+    Title: searchformholder
+  publishedPage:
+    Title: publishedPage
+    Content: English content
 Group:
-   admingroup:
-      Code: admingroup
+  admingroup:
+    Code: admingroup
 Member:
-   admin:
-       FirstName: Admin
-       Groups: =>Group.admingroup
+  admin:
+    FirstName: Admin
+    Groups: =>Group.admingroup
 Permission:
-   admincode:
-      Code: ADMIN
-      Group: =>Group.admingroup
+  admincode:
+    Code: ADMIN
+    Group: =>Group.admingroup
