@@ -1,9 +1,9 @@
 {
-	"name": "martimiz/silverstripe-languageprefix",
+	"name": "timezoneone/silverstripe-languageprefix",
 	"description": "Extends silverstripe-translatable to allow for (custom) language prefixes on multilingual sites.",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "languageprefix", "cms", "multilingual", "i18n", "translatable", "localization", "globalization"],
-	"homepage": "https://github.com/Martimiz/silverstripe-languageprefix",
+	"homepage": "https://github.com/TimeZoneOne/silverstripe-languageprefix",
 	"license": "BSD-3-Clause",
 	"authors": [
 		{
@@ -19,7 +19,7 @@
 	},
 	"support": 
 	{
-		"issues": "https://github.com/Martimiz/silverstripe-languageprefix/issues?state=open"
+		"issues": "https://github.com/TimeZoneOne/silverstripe-languageprefix/issues?state=open"
 	},
 	"extra": {
                 "installer-name": "languageprefix"
