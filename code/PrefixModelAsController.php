@@ -53,16 +53,10 @@ class PrefixModelAsController extends ModelAsController
                     $request->shift(1);
                 }
             } else {
-                /*
-                 *  if no prefix is used but $disablePrefixForDefaultLang
-                 *  is set, we go on like nothing happened. Otherwise a
-                 *  404 is generated. @todo: maybe we should redirect
-                 *  pages that do actually exist, because this is a bit
-                 *  harsh?
-                 */
-                //if (!$isDefaultLocale || !$disablePrefixForDefaultLang) {
-                //	return $this->showPageNotFound();
-                //}
+                if(class_exists('RedirectedURL')){
+                    $redirect=new RedirectedURLHandler();
+                    $redirect->onBeforeHTTPError404($request);
+                }
             }
         }
 
@@ -149,6 +143,10 @@ class PrefixModelAsController extends ModelAsController
                 return $this->response;
             }
 
+            if(class_exists('RedirectedURL')){
+                $redirect=new RedirectedURLHandler();
+                $redirect->onBeforeHTTPError404($this->request);
+            }
             // all is now lost!
             return $this->showPageNotFound();
         }
