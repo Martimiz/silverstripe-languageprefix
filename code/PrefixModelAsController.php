@@ -143,6 +143,10 @@ class PrefixModelAsController extends ModelAsController
                 return $this->response;
             }
 
+            if(class_exists('RedirectedURL')){
+                $redirect=new RedirectedURLHandler();
+                $redirect->onBeforeHTTPError404($this->request);
+            }
             // all is now lost!
             return $this->showPageNotFound();
         }
